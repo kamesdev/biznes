@@ -7,8 +7,6 @@ dotenv.config()
 
 connectDB();
 
-console.log('zmiana w kodzie')
-
 // Routes
 import userRoutes from './routes/userRoutes.js'
 const app = express()
