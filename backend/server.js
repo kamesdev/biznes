@@ -1,12 +1,17 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import AppError from './utils/appError'
+import AppError from './utils/appError.js'
 
 import { connectDB } from './config/db.js'
 
 dotenv.config()
 
 connectDB();
+
+process.on('uncaughtException', err => {
+  console.log('UNCAUGHT EXCEPTION!');
+  console.log(err.name, err.message);
+});
 
 // Routes
 import userRoutes from './routes/userRoutes.js'
@@ -30,3 +35,11 @@ console.log('xdeee')
 app.listen(PORT, () => {
   console.log(`Listening in ${NODE_ENV} on port ${PORT}`)
 })
+
+process.on('unhandledRejection', err => {
+  console.log('UNHANDLED REJECTION!');
+  console.log(err.name, err.message);
+  server.close(() => {
+      process.exit(1);
+  });
+});

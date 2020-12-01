@@ -1,9 +1,36 @@
 import asyncHandler from 'express-async-handler'
-import AppError from './../utils/appError'
+import AppError from '../utils/appError.js'
+import jwt from 'jsonwebtoken'
 
 // import models
 import User from '../models/userModel.js'
 
+const signToken = userID => {
+  return jwt.sign({ id: userID }, process.env.JWT_SECRET, {
+      expiresIn: `${process.env.JWT_EXPIRES_IN}`
+  })
+}
+
+const createSendToken = (user, statusCode, res) => {
+  const token = signToken(user._id)
+  const cookieOptions = {
+      expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+      httpOnly: true
+  };
+  if(process.env.NODE_ENV === 'production') cookieOptions.secure = true
+  res.cookie('jwt', token, cookieOptions)
+
+  // Remove password from output
+  user.password = undefined
+
+  res.status(statusCode).json({
+      status: "success",
+      token,
+      data:  {
+          user
+      } 
+  });
+};
 
 const loginUser = asyncHandler(async (req, res, next) => {
  const { email, password } = req.body;
@@ -27,12 +54,10 @@ const loginUser = asyncHandler(async (req, res, next) => {
   } */
   
   // send token
- res.json({message: 'Logged in', user: user})
-
+  createSendToken(newUser, 201, res);
 })
 
 const registerUser = asyncHandler(async (req, res) => {
-
   const { name, email, password, passwordConfirm } = req.body
 
   if (!(name && email && password && passwordConfirm)) {
@@ -50,7 +75,6 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // Saving user
-
   const newUser = {
     name,
     email,
@@ -59,8 +83,8 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const user = await User.create(newUser)
 
-  res.json({success: 'User created!', user: user})
-
+  // Create token
+  createSendToken(newUser, 201, res);
 })
 
 export {
