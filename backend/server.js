@@ -9,9 +9,6 @@ connectDB();
 
 // Routes
 import userRoutes from './routes/userRoutes.js'
-
-console.log('dodaje ta linijke')
-
 const app = express()
 
 app.use(express.json())
