@@ -20,8 +20,6 @@ const PORT = process.env.PORT || 5000
 const NODE_ENV = process.env.NODE_ENV || 'developmnet'
 
 
-console.log('hello')
-
 app.listen(PORT, () => {
   console.log(`Listening in ${NODE_ENV} on port ${PORT}`)
 })
