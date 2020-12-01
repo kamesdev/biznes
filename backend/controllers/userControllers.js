@@ -57,7 +57,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
   createSendToken(newUser, 201, res);
 })
 
-const registerUser = asyncHandler(async (req, res) => {
+const registerUser = asyncHandler(async (req, res, next) => {
   const { name, email, password, passwordConfirm } = req.body
 
   if (!(name && email && password && passwordConfirm)) {
