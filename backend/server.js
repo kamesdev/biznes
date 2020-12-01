@@ -10,6 +10,8 @@ connectDB();
 // Routes
 import userRoutes from './routes/userRoutes.js'
 
+console.log('zmiana w kodzie')
+
 const app = express()
 
 app.use(express.json())
