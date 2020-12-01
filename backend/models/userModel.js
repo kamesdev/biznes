@@ -2,21 +2,21 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
 const UserSchema = new mongoose.Schema({
-
   name: {
     type: String,
-    required: true
+    required: [true, 'Provide your name!']
   },
 
   email: {
     type: String,
-    required: true,
+    required: [true, 'Provide your email!'],
     unique: true,
   },
 
   password: {
     type: String,
-    required: [true, 'Provide your password!']
+    required: [true, 'Provide your password!'],
+    select: false
   },
 
   passwordConfirm: {
@@ -40,7 +40,8 @@ const UserSchema = new mongoose.Schema({
 
   isAdmin: {
     type: Boolean,
-    default: false
+    default: false,
+    select: false
   }
 }, {
   timestamps: true
