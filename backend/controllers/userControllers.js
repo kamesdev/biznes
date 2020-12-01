@@ -1,9 +1,7 @@
 import asyncHandler from 'express-async-handler'
-import bcrypt from 'bcryptjs'
 
 // import models
 import User from '../models/userModel.js'
-
 
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -11,6 +9,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   if (!(email && password)) {
     return res.json({message: 'Fill in all fields'})
+    // throw new Error('Fill in all fields')
   }
 
   const user = await User.findOne({ email })
