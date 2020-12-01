@@ -16,7 +16,19 @@ const UserSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    required: true,
+    required: [true, 'Provide your password!']
+  },
+
+  passwordConfirm: {
+    type: String,
+    required: [true, 'Please confirm your password!'],
+     // This only works on CREATE and SAVE
+    validate: {
+      validator: function(el) {
+          return el === this.password;
+      },
+      message: 'Passwords are not the same!'
+    }
   },
 
   orders: [],
@@ -47,6 +59,7 @@ UserSchema.pre('save', async function (next) {
 
   const salt = await bcrypt.genSalt(10)
   this.password = await bcrypt.hash(this.password, salt)
+  this.passwordConfirm = undefined
 }
 )
 

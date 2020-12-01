@@ -1,54 +1,52 @@
 import asyncHandler from 'express-async-handler'
+import AppError from './../utils/appError'
 
 // import models
 import User from '../models/userModel.js'
 
 
-const loginUser = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req, res, next) => {
  const { email, password } = req.body;
 
   if (!(email && password)) {
-    return res.json({message: 'Fill in all fields'})
-    // throw new Error('Fill in all fields')
+    return next(new AppError('Please provide email and password', 400));
   }
 
-  const user = await User.findOne({ email })
+  const user = await User.findOne({ email }).select('+password');
 
-  if (!user) {
-    return res.json({message: 'Wrong credentials'})
-  }
+  if(!user || !(await user.matchPassword(password, user.password))) {
+    return next(new AppError('Incorrect email or password'), 401);
+};
 
   // if (!(await bcrypt.compare(password, user.password))) {
   //   return res.json({message: 'Wrong credentials'})
   // }
-  console.log(email, password)
+  /*   console.log(email, password)
   if (!await user.matchPassword(password)) {
     return res.json({message: 'Wrong credentails'})
-  }
-
+  } */
+  
+  // send token
  res.json({message: 'Logged in', user: user})
 
 })
 
-
-
 const registerUser = asyncHandler(async (req, res) => {
 
-  const { name, email, password, confirmPassword } = req.body
+  const { name, email, password, passwordConfirm } = req.body
 
-  if (!(name && email && password && confirmPassword)) {
-    console.log('Fill in all fields')
-    return res.json({message: 'Fill in all fields'})
+  if (!(name && email && password && passwordConfirm)) {
+    return next(new AppError('message', 401))
   }
 
-  if (password !== confirmPassword) {
-    return res.json({message: 'Password doesnt match!'})
+  if (password !== passwordConfirm) {
+    return next(new AppError('message', 401))
   }
 
   const emailExists = await User.findOne({email})
 
   if (emailExists) {
-    return res.json({message: 'This email is already taken!'})
+    return next(new AppError('message', 401))
   }
 
   // Saving user
