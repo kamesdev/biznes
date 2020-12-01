@@ -14,7 +14,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-console.log('Piekosowy seeen!')
+console.log('Piekosowy xd seeen!')
 
 app.use('/user', userRoutes)
 
