@@ -14,6 +14,8 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+console.log('Piekosowy sen!')
+
 app.use('/user', userRoutes)
 
 const PORT = process.env.PORT || 5000
