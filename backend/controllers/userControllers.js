@@ -102,12 +102,6 @@ const protect = asyncHandler(async (req, res, next) => {
        return next(new AppError('The user belonging to this token does no longer exist'), 401)
    }
 
-  // narazie nie potrzebne
-   /* // 4) Check if user changed password after the token was issued
-   if (freshUser.changedPasswordAfter(decoded.iat)) {
-       return next(new AppError('User recently changed password! Please log in again'), 401)
-   }
-  */
    // Grant access to protected route
    req.user = freshUser // sends to the next middleware (restrictTo) req.user 
    next()
