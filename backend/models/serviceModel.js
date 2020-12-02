@@ -1,31 +1,41 @@
 import mongoose from 'mongoose'
 
-const ServiceModel = mongoose.Schema({
+const serviceSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User',
+  },
+  provider_service_id: {
+    type: Number,
+    required: true,
+  },
   name: {
     type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
     required: true,
   },
-  orders: [],
-  balance: {
-    default: 0
-  }
+  price: {
+    type: Number,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  decscription: {
+    type: String,
+    required: true,
+  },
+  isAvailable: {
+    type: Boolean,
+    default: true
+  },
+}, {
+  timestamps: true,
 })
 
-// "service": 2,
-// "name": "Comments",
-// "type": "Custom Comments",
-// "category": "Second Category",
-// "rate": "8",
-// "min": "10",
-// "max": "1500"
-
-export default mongoose.model('User', ServiceModel)
+export default mongoose.model('Service', serviceSchema)

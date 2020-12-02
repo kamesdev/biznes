@@ -33,13 +33,13 @@ const orderSchema = mongoose.Schema({
     default: false,
     required: true,
   },
-  paidAt: {
-    type: Date.now(),
-  },
   totalPrice: {
     type: Number,
     required: true,
     default: 0.0,
+  },
+  paidAt: {
+    type: Date.now(),
   },
   paymentMethod: {
     type: String,
