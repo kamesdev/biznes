@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import AppError from './utils/appError.js'
+const globalErrorHandler = require('./controllers/errorController');
 
 import { connectDB } from './config/db.js'
 
@@ -26,6 +27,8 @@ app.use('/user', userRoutes)
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 })
+
+app.use(globalErrorHandler);
 
 const PORT = process.env.PORT || 5000
 const NODE_ENV = process.env.NODE_ENV || 'developmnet'
