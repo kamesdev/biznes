@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import AppError from './utils/appError.js'
-const globalErrorHandler = require('./controllers/errorController');
+//import errorGlobal from './utils/errorGlobal'
 
 import { connectDB } from './config/db.js'
 
@@ -28,12 +28,10 @@ app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 })
 
-app.use(globalErrorHandler);
+//app.use(errorGlobal);
 
 const PORT = process.env.PORT || 5000
 const NODE_ENV = process.env.NODE_ENV || 'developmnet'
-
-console.log('xdeee')
 
 app.listen(PORT, () => {
   console.log(`Listening in ${NODE_ENV} on port ${PORT}`)
