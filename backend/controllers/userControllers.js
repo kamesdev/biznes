@@ -90,7 +90,7 @@ const protect = asyncHandler(async (req, res, next) => {
    };
 
    if(!token) {
-       return next(new AppError('You are not log in! Please log in to get acces', 401))
+       return next(new AppError('You are not log in! Please log in to get access', 401))
    }
 
    // 2) Verification token
@@ -137,7 +137,13 @@ const updatePassword = asyncHandler(async (req, res, next) => {
   createSendToken(user, 200, res)
 });
 
+const logout = asyncHandler(async (req, res, next) => {
+  res.clearCookie('jwt')
+  res.json({message: 'Logged out'})
+})
+
 export {
+  logout,
   loginUser,
   registerUser,
   protect,
