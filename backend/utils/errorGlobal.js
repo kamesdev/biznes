@@ -60,9 +60,9 @@ const errorGlobal = (err, req, res, next) => {
         let error = { ...err }
         error.message = err.message
 
-        if(err.name === 'CastError') error = handleCastErrorDB(err)
-        if(err.code === 11000) error = handleDuplicateFieldsDB(err)
-        if(err.name === 'ValidationError') error = handleValidationErrorDB(err)
+        if(err.name === 'CastError') error = handleCastErrorDB(error)
+        if(err.code === 11000) error = handleDuplicateFieldsDB(error)
+        if(err.name === 'ValidationError') error = handleValidationErrorDB(error)
         if(err.name === 'JsonWebTokenError') error = handleJWTError()
         if(err.name === 'TokenExpiredError') error = handleJWTExpiredError()
 
