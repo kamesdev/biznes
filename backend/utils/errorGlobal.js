@@ -56,7 +56,7 @@ const errorGlobal = (err, req, res, next) => {
     if(process.env.NODE_ENV === 'development') {
         sendErrorDev(err, res)
     } else {
-        let error = { ...error }
+        let error = { ...err }
 
         if(err.name === 'CastError') error = handleCastErrorDB(error)
         if(err.code === 11000) error = handleDuplicateFieldsDB(error)
