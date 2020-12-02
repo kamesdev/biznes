@@ -11,7 +11,11 @@ connectDB();
 
 process.on('uncaughtException', err => {
   console.log('UNCAUGHT EXCEPTION!');
-  console.log(err.name, err.message);
+  if(process.env.NODE_ENV==='developmnet') {
+    console.log(err)
+    } else {
+      console.log(err.name)
+    } 
 });
 
 // Routes
@@ -23,14 +27,12 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/user', userRoutes)
 
-app.use(errorGlobal())
-
 // Must be after all routes
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 })
 
-//app.use(errorGlobal);
+app.use(errorGlobal);
 
 const PORT = process.env.PORT || 5000
 const NODE_ENV = process.env.NODE_ENV || 'developmnet'
