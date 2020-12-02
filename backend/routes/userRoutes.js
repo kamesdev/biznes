@@ -8,7 +8,7 @@ import { loginUser, registerUser, protect, myProfile, updatePassword } from '../
 
 router.post('/login', loginUser)
 router.post('/register', registerUser)
-router.post('/myprofile', protect, myProfile);
+router.get('/myprofile', protect, myProfile);
 router.patch('/updatePassword', protect, updatePassword)
 
 export default router
