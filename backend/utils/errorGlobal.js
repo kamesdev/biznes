@@ -49,7 +49,7 @@ const sendErrorProd = (err, res) => {
     }
 }
 
-const errorGlobal = (err, req, res, next) => {
+export default errorGlobal = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500
     err.status = err.status
 
@@ -66,8 +66,4 @@ const errorGlobal = (err, req, res, next) => {
 
         sendErrorProd(error, res);
     }
-}
-
-export {
-    errorGlobal
 }
