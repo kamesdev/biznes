@@ -1,6 +1,10 @@
 import mongoose from 'mongoose'
 
 const serviceSchema = mongoose.Schema({
+  order: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Service'
+  },
   provider_service_id: {
     type: Number,
     //required: true,
@@ -32,5 +36,11 @@ const serviceSchema = mongoose.Schema({
 }, {
   timestamps: true,
 })
+
+/* serviceSchema.virtual('orders', {
+  ref: 'Order',
+  foreignField: 'orderedServices',
+  localField: '_id'
+}); */
 
 export default mongoose.model('Service', serviceSchema)

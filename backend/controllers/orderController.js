@@ -21,6 +21,18 @@ const createOrder = asyncHandler(async (req, res, next) => {
     })
 })
 
+const getAllOrders = asyncHandler(async (req, res, next) => {
+    const orders = await Order.find()
+
+    res.status(201).json({
+        status: 'success',
+        data: {
+            data: orders
+        }
+    })
+})
+
 export {
-    createOrder
+    createOrder,
+    getAllOrders
 }

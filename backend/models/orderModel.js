@@ -8,8 +8,8 @@ const orderSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Service'
     } */
-      required: true,
-      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'Must belong to service'],
+      type: mongoose.Schema.ObjectId,
       ref: 'Service'
   },
   details: {
@@ -50,11 +50,5 @@ const orderSchema = mongoose.Schema({
     email_address: { type: String },
   }, */
 })
-
-orderSchema.virtual('service', {
-  ref: 'Service',
-  foreignField: 'order',
-  localField: '_id'
-});
 
 export default mongoose.model('Order', orderSchema)
