@@ -12,6 +12,18 @@ const createService = asyncHandler(async (req, res, next) => {
     })
 })
 
+const getAllServices = asyncHandler(async (req, res, next) => {
+    const services = await Service.find()
+
+    res.status(201).json({
+        status: 'success',
+        data: {
+            data: services
+        }
+    })
+})
+
 export {
-    createService
+    createService,
+    getAllServices
 }

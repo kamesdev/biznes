@@ -1,14 +1,9 @@
 import mongoose from 'mongoose'
 
 const serviceSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'User',
-  },
   provider_service_id: {
     type: Number,
-    required: true,
+    //required: true,
   },
   name: {
     type: String,
@@ -24,7 +19,7 @@ const serviceSchema = mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
+    //required: true,
   },
   details: {
     type: String,

@@ -1,12 +1,16 @@
 import mongoose from 'mongoose'
+import validator from 'validator'
 
 const orderSchema = mongoose.Schema({
   orderedServices: {
-    product: {
+    /* product: {
       required: true,
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Service',
-    }
+      ref: 'Service'
+    } */
+      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Service'
   },
   details: {
     type: String,
@@ -26,13 +30,19 @@ const orderSchema = mongoose.Schema({
     required: true,
     default: 0.0,
   },
-  paidAt: {
-    type: Date.now(),
-  },
+  /* paidAt: {
+    type: Date.now() // wywala blad!
+  }, */
   paymentMethod: {
     type: String,
     //required: true,
   },
+  email: {
+    type: String,
+    required: [true, 'Please provide your email!'],
+    lowercase: true,
+    validate: [validator.isEmail, 'Please provide a valid email!']
+  }
  /*  paymentResult: {
     id: { type: String },
     status: { type: String },

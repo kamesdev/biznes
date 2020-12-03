@@ -1,16 +1,26 @@
 import AppError from '../utils/appError.js'
 import asyncHandler from 'express-async-handler'
-import Order from '../models/orderModel'
-import Service from '../models/serviceModel'
+import Order from '../models/orderModel.js'
+import Service from '../models/serviceModel.js'
 
-/* const createOrder = asyncHandler(async (req, res, next) => {
+const createOrder = asyncHandler(async (req, res, next) => {
     const service = await Service.findById(req.params.serviceId);
-    console.log(service);
 
     const orderedServices = req.params.serviceId
     const { totalPrice, details,  } = service
-    const body = {orderedServices, totalPrice, details}
+    const { email } = req.body
+    const body = {orderedServices, totalPrice, details, email}
 
     const order = await Order.create(body)
 
-}) */
+    res.status(201).json({
+        status: 'success',
+        data: {
+            data: order
+        }
+    })
+})
+
+export {
+    createOrder
+}
