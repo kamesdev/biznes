@@ -20,7 +20,7 @@ process.on('uncaughtException', err => {
 
 // Routes
 import userRoutes from './routes/userRoutes.js'
-import serviceRouter from './routes/serviceRouter'
+import serviceRouter from './routes/serviceRouter.js'
 const app = express()
 
 app.use(express.json())

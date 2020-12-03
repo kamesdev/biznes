@@ -1,4 +1,4 @@
-import Service from '../models/serviceModel'
+import Service from '../models/serviceModel.js'
 import asyncHandler from 'express-async-handler'
 
 const createService = asyncHandler(async (req, res, next) => {
