@@ -26,7 +26,7 @@ const serviceSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  decscription: {
+  details: {
     type: String,
     required: true,
   },

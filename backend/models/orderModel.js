@@ -1,25 +1,13 @@
 import mongoose from 'mongoose'
 
 const orderSchema = mongoose.Schema({
-  user: {
-    required: true,
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
-
-  orderedServices: [
-    {
-      name: { type: String, required: true },
-      qty: { type: Number, required: true },
-      image: { type: String, required: true },
-      price: { type: Number, required: true },
-      product: {
-        required: true,
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Service',
-      },
+  orderedServices: {
+    product: {
+      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Service',
     }
-  ],
+  },
   details: {
     type: String,
     required: true,
@@ -31,7 +19,7 @@ const orderSchema = mongoose.Schema({
   isPaid: {
     type: Boolean,
     default: false,
-    required: true,
+    //required: true,
   },
   totalPrice: {
     type: Number,
@@ -43,14 +31,20 @@ const orderSchema = mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-    required: true,
+    //required: true,
   },
-  paymentResult: {
+ /*  paymentResult: {
     id: { type: String },
     status: { type: String },
     update_time: { type: String },
     email_address: { type: String },
-  },
+  }, */
 })
+
+orderSchema.virtual('service', {
+  ref: 'Service',
+  foreignField: 'order',
+  localField: '_id'
+});
 
 export default mongoose.model('Order', orderSchema)
