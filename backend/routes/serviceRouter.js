@@ -1,6 +1,6 @@
 import express from 'express'
 /* import protect from '../controllers/userControllers.js' */
-import createService from '../controllers/serviceController.js'
+import {createService} from '../controllers/serviceController.js'
 
 const router = express.Router()
 
