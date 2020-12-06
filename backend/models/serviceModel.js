@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const serviceSchema = mongoose.Schema({
+/* const serviceSchema = mongoose.Schema({
   order: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Service'
@@ -34,13 +34,54 @@ const serviceSchema = mongoose.Schema({
     default: true
   },
 }, {
-  timestamps: true,
-})
+  timestamps: true
+}) */
 
 /* serviceSchema.virtual('orders', {
   ref: 'Order',
   foreignField: 'orderedServices',
   localField: '_id'
 }); */
+
+const serviceSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    //required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  variants: [
+    {
+      order: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Service'
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      details: {
+        type: String,
+        required: true,
+      },
+      isAvailable: {
+        type: Boolean,
+        default: true
+      },
+      provider_service_id: {
+        type: Number,
+        //required: true,
+      }
+    }
+  ]
+}, {
+  timestamps: true
+})
 
 export default mongoose.model('Service', serviceSchema)
