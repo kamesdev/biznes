@@ -77,6 +77,10 @@ const serviceSchema = new mongoose.Schema({
       provider_service_id: {
         type: Number,
         //required: true,
+      },
+      amount: {
+        type: Number,
+        required: true
       }
     }
   ]
