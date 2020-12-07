@@ -1,34 +1,21 @@
 import mongoose from 'mongoose'
 import validator from 'validator'
+import Service from './serviceModel.js'
 
 const orderSchema = mongoose.Schema({
   orderedServices: {
-    /* product: {
-      required: true,
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Service'
-    } */
-      required: [true, 'Must belong to service'],
       type: mongoose.Schema.ObjectId,
-      ref: 'Service'
+      ref: 'Service',
+      required: [true, 'Must belong to service']
   },
   details: {
     type: String,
-    required: true,
-  },
-  totalPrice: {
-    type: Number,
     required: true,
   },
   isPaid: {
     type: Boolean,
     default: false,
     //required: true,
-  },
-  totalPrice: {
-    type: Number,
-    required: true,
-    default: 0.0,
   },
   /* paidAt: {
     type: Date.now() // wywala blad!
@@ -42,13 +29,29 @@ const orderSchema = mongoose.Schema({
     required: [true, 'Please provide your email!'],
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email!']
-  }
+  },
+  amount: {
+    type: Number,
+    required: true
+  },
+  price: Number
  /*  paymentResult: {
     id: { type: String },
     status: { type: String },
     update_time: { type: String },
     email_address: { type: String },
   }, */
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+})
+
+orderSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'orderedServices',
+    select: 'name image category'
+  })
+  next()
 })
 
 export default mongoose.model('Order', orderSchema)

@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import AppError from './utils/appError.js'
 import errorGlobal from './utils/errorGlobal.js'
+import orderRouter from './routes/orderRouter.js'
 
 import { connectDB } from './config/db.js'
 
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/user', userRoutes)
 app.use('/service', serviceRouter)
+app.use('/orders', orderRouter)
 
 // Must be after all routes
 app.all('*', (req, res, next) => {

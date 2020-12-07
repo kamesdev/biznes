@@ -88,4 +88,10 @@ const serviceSchema = new mongoose.Schema({
   timestamps: true
 })
 
+serviceSchema.virtual('orders', {
+  ref: 'Order',
+  foreignField: 'ordereServices',
+  localField: '_id'
+})
+
 export default mongoose.model('Service', serviceSchema)
