@@ -8,6 +8,8 @@ import { connectDB } from './config/db.js'
 
 dotenv.config()
 
+console.log('test')
+
 connectDB();
 
 process.on('uncaughtException', err => {
