@@ -9,6 +9,7 @@ import { connectDB } from './config/db.js'
 dotenv.config()
 
 console.log('test')
+console.log('test2')
 
 connectDB();
 
