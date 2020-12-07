@@ -34,8 +34,22 @@ const getService = asyncHandler(async (req, res, next) => {
     })
 })
 
+// Not for variants !
+const updateService = asyncHandler(async (req, res, next) => {
+    const updatedService = Service.findByIdAndUpdate(req.params.id, req.body)
+
+    res.status(201).json({
+        status: 'success',
+        data: {
+            data: updatedService
+        }
+    })
+})
+
+
 export {
     createService,
     getAllServices,
-    getService
+    getService,
+    updateService
 }

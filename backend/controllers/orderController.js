@@ -26,9 +26,9 @@ const createOrder = asyncHandler(async (req, res, next) => {
 })
 
 const getAllOrders = asyncHandler(async (req, res, next) => {
-    /* let filter = {}
-    if(req.params.serviceId) filter = {} */
-    const orders = await Order.find() 
+    let filter = {}
+    if(req.params.serviceId) filter = {orderedServices: req.params.serviceId} 
+    const orders = await Order.find(filter) 
 
     res.status(201).json({
         status: 'success',

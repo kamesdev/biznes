@@ -27,8 +27,8 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-app.use('/user', userRoutes)
-app.use('/service', serviceRouter)
+app.use('/users', userRoutes)
+app.use('/services', serviceRouter)
 app.use('/orders', orderRouter)
 
 // Must be after all routes
