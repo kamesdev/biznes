@@ -4,6 +4,11 @@ import AppError from './utils/appError.js'
 import errorGlobal from './utils/errorGlobal.js'
 import orderRouter from './routes/orderRouter.js'
 
+import helmet from 'helmet'
+import xss from 'xss-clean'
+import mongoSanitize from 'express-mongo-sanitize'
+import rateLimit from 'express-rate-limit'
+
 import { connectDB } from './config/db.js'
 
 dotenv.config()
@@ -19,14 +24,31 @@ process.on('uncaughtException', err => {
     } 
 });
 
-// Routes
 import userRoutes from './routes/userRoutes.js'
 import serviceRouter from './routes/serviceRouter.js'
 const app = express()
 
+// Set security HTTP
+app.use(helmet());
+
+// Limit requests from same API
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour!'
+});
+app.use('/', limiter);
+
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// Data sanitization against XSS
+app.use(xss());
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+// Routes
 app.use('/users', userRoutes)
 app.use('/services', serviceRouter)
 app.use('/orders', orderRouter)
