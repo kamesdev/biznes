@@ -10,12 +10,12 @@ const createOrder = asyncHandler(async (req, res, next) => {
     service.variants.map(el => {
         if(el.amount === req.body.amount) serviceVariant = el;
     })
-    
+
     const orderedServices = req.params.serviceId
     const { price, details } = serviceVariant
     const { email, amount } = req.body
     const body = {orderedServices, price, details, email, amount}
-
+    
     const order = await Order.create(body)
 
     res.status(201).json({
