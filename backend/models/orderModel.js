@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import validator from 'validator'
-import Service from './serviceModel.js'
+//import Service from './serviceModel.js'
 
 const orderSchema = mongoose.Schema({
   orderedServices: {

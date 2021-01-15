@@ -24,7 +24,7 @@ const getAllServices = asyncHandler(async (req, res, next) => {
 })
 
 const getService = asyncHandler(async (req, res, next) => {
-    const service = await Service.findById(req.params.id)
+    const service = await Service.findById(req.params.id).populate({ path: 'orders' })
 
     res.status(201).json({
         status: 'success',

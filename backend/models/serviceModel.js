@@ -58,10 +58,6 @@ const serviceSchema = new mongoose.Schema({
   },
   variants: [
     {
-      order: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Service'
-      },
       price: {
         type: Number,
         required: true,
@@ -85,12 +81,14 @@ const serviceSchema = new mongoose.Schema({
     }
   ]
 }, {
-  timestamps: true
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 })
 
 serviceSchema.virtual('orders', {
   ref: 'Order',
-  foreignField: 'ordereServices',
+  foreignField: 'orderedServices',
   localField: '_id'
 })
 
